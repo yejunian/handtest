@@ -21,8 +21,8 @@ div.custom-slider > div.track-active {
   top: 10px; /* track.top := (wrapper.height - track.height) / 2 */
 
   /* must be defined by user as -- */
-  background-color: rgba(128, 192, 255, 1); /* CSS property: background-color */
   height: 10px; /* HTML attribute: data-track-height */
+  background-color: rgba(128, 192, 255, 1); /* CSS property: background-color */
 }
 
 div.custom-slider > div.track-inactive {
@@ -35,8 +35,8 @@ div.custom-slider > div.track-inactive {
   left: 115px; /* track.active.width */
 
   /* must be defined by user as -- */
-  background-color: rgba(192, 224, 255, 1); /* CSS property: background-color */
   height: 10px; /* HTML attribute: data-track-height */
+  background-color: rgba(192, 224, 255, 1); /* CSS property: background-color */
 }
 
 div.custom-slider > div.tickmark {
@@ -71,14 +71,14 @@ div.custom-slider > div.tickmark > hr {
 div.custom-slider > div.thumb {
   /* must be fixed */
   position: absolute;
+  top: 0;
 
   /* automatically defined */
   left: 100px; /* track.active.width - thumb.width / 2 */
 
   /* must be defined by user as -- */
-  top: 0;
+  width: 30px; /* HTML attribute: data-thumb-width */
+  height: 30px; /* HTML attribute: data-thumb-height */
   background-color: rgba(128, 192, 255, 1); /* CSS property: background-color */
-  width: 30px; /* CSS property: width */
-  height: 30px; /* CSS property: height */
   border-radius: 15px; /* CSS property: border-radius */
 }

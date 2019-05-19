@@ -27,33 +27,29 @@ function CustomSlider() {
     p.appendChild(document.createTextNode('[customslider] ' + message));
     target.appendChild(p);
   }
-  
-  /*
-  function getNumberAndUnitFromString(src, defaultNumber, defaultUnit) {
-    var srcMatch, data;
-    //   <number> -> <number>px
-    //   <length> -> <length>
-    //   <percentage> -> <percentage>
-    data = {};
-    srcMatch = src.match(/^([+\-]?(?:(?:[0-9]+)?\.[0-9]+|[0-9]+)(?:e[+\-]?[0-9]+)?)([A-Za-z]+|%)?$/); // match CSS <length>, <percentage>, or <number>
+
+  /*  return number and unit of src
+  */
+  function seperateNumberAndUnit(src) {
+    var srcMatch, nu;
+    // match CSS <length>, <percentage>, or <number>
+    srcMatch = src.match(/^([+\-]?(?:(?:[0-9]+)?\.[0-9]+|[0-9]+)(?:e[+\-]?[0-9]+)?)([A-Za-z]+|%)?$/);
+    nu = {};
     if (!srcMatch[1]) { // invalid number
-      data.number = defaultNumber;
+      nu.number = NaN;
     } else {
-      data.number = +srcMatch[1];
+      nu.number = +srcMatch[1];
     }
     if (!srcMatch[2]) { // no unit
-      data.unit = (data.number === 0) ? '' : defaultUnit;
-      data.string = data.number + data.unit;
+      nu.unit = undefined;
     } else {
-      data.unit = srcMatch[2];
-      data.string = data.number + data.unit;
+      nu.unit = srcMatch[2];
     }
-    return data;
+    return nu;
   }
-  */
-  
+
   function getAttributesFromTarget(target) {
-    var data, temp;
+    var data, temp, nu;
 
     data = {};
 
@@ -91,9 +87,16 @@ function CustomSlider() {
     // data-width -> data.width:String
     temp = target.getAttribute('data-width');
     if (!temp) {
-      data.width = '230px';
+      data.width = '200px';
     } else {
-      data.width = temp.trim();
+      nu = seperateNumberAndUnit(temp.trim());
+      if (!nu.number && nu.number !== 0) {
+        nu.number = 200;
+      }
+      if (!nu.unit) {
+        nu.unit = 'px';
+      }
+      data.width = nu.number + nu.unit;
     }
 
     data.track = {};
@@ -101,17 +104,31 @@ function CustomSlider() {
     // data-track-cap-width -> data.track.capWidth:String
     temp = target.getAttribute('data-track-cap-width');
     if (!temp) {
-      data.track.capWidth = '0';
+      data.track.capWidth = '0px';
     } else {
-      data.track.capWidth = temp.trim();
+      nu = seperateNumberAndUnit(temp.trim());
+      if (!nu.number && nu.number !== 0) {
+        nu.number = 0;
+      }
+      if (!nu.unit) {
+        nu.unit = 'px';
+      }
+      data.track.capWidth = nu.number + nu.unit;
     }
 
     // data-track-height -> data.track.height:String
     temp = target.getAttribute('data-track-height');
     if (!temp) {
-      data.track.height = '0';
+      data.track.height = '0px';
     } else {
-      data.track.height = temp.trim();
+      nu = seperateNumberAndUnit(temp.trim());
+      if (!nu.number && nu.number !== 0) {
+        nu.number = 0;
+      }
+      if (!nu.unit) {
+        nu.unit = 'px';
+      }
+      data.track.height = nu.number + nu.unit;
     }
 
     data.thumb = {};
@@ -119,17 +136,31 @@ function CustomSlider() {
     // data-thumb-width -> data.thumb.width:String
     temp = target.getAttribute('data-thumb-width');
     if (!temp) {
-      data.thumb.width = '0';
+      data.thumb.width = '0px';
     } else {
-      data.thumb.width = temp.trim();
+      nu = seperateNumberAndUnit(temp.trim());
+      if (!nu.number && nu.number !== 0) {
+        nu.number = 0;
+      }
+      if (!nu.unit) {
+        nu.unit = 'px';
+      }
+      data.thumb.width = nu.number + nu.unit;
     }
 
     // data-thumb-height -> data.thumb.height:String
     temp = target.getAttribute('data-thumb-height');
     if (!temp) {
-      data.thumb.height = '0';
+      data.thumb.height = '0px';
     } else {
-      data.thumb.height = temp.trim();
+      nu = seperateNumberAndUnit(temp.trim());
+      if (!nu.number && nu.number !== 0) {
+        nu.number = 0;
+      }
+      if (!nu.unit) {
+        nu.unit = 'px';
+      }
+      data.thumb.height = nu.number + nu.unit;
     }
 
     data.tick = {};
@@ -190,7 +221,7 @@ function CustomSlider() {
     calc.validWidth =
       '(' + data.width + ' - ' + data.track.capWidth + ' * 2)';
     calc.percentage =
-      (data.value - data.min) + ' / ' + (data.max - data.min);
+      (data.value - data.min) / (data.max - data.min);
     // (thumb.height - track.height) / 2
     calc.trackTop =
       '(' + data.thumb.height + ' - ' + data.track.height + ') / 2';
@@ -234,6 +265,8 @@ function CustomSlider() {
     // track.active.width - thumb.width / 2
     thumbElem.style.left =
       'calc(' + calc.trackActiveWidth + ' - ' + data.thumb.width + ' / 2)';
+    thumbElem.style.width = data.thumb.width;
+    thumbElem.style.height = data.thumb.height;
 
     // 2.3. build DOM
     for (i = 0; i < data.tick.count; i += 1) {
@@ -251,15 +284,15 @@ function CustomSlider() {
         var thumbLeft;
         e = (e || window.event);
         e.preventDefault();
-        thumbLeft = e.clientX - target.offsetLeft - tickmarkElem.offsetLeft;
-        if (thumbLeft < 0) {
+        thumbLeft = e.clientX - target.offsetLeft - thumbElem.offsetWidth / 2;
+        if (thumbLeft < -tickmarkElem.offsetLeft) {
           thumbElem.style.left = '0';
           trackAElem.style.width = tickmarkElem.offsetLeft + 'px';
           trackIElem.style.width =
             (tickmarkElem.offsetLeft + tickmarkElem.offsetWidth) + 'px';
           trackIElem.style.left = trackAElem.style.width;
           target.dataset.value = data.min;
-        } else if (thumbLeft > tickmarkElem.offsetWidth) {
+        } else if (thumbLeft > tickmarkElem.offsetWidth - tickmarkElem.offsetLeft + thumbElem.offsetWidth / 2) {
           thumbElem.style.left = tickmarkElem.offsetWidth + 'px';
           trackAElem.style.width =
             (tickmarkElem.offsetLeft + tickmarkElem.offsetWidth) + 'px';
@@ -276,9 +309,6 @@ function CustomSlider() {
           target.dataset.value =
             thumbLeft * (data.max - data.min) / tickmarkElem.offsetWidth;
         }
-        //console.log(thumbLeft / tickmarkElem.offsetWidth * (data.max - data.min));
-        //console.log(thumbLeft * (data.max - data.min) / tickmarkElem.offsetWidth);
-        //console.log(thumbLeft);
       }
       function sliderReleased(e) {
         sliderDragging(e);
