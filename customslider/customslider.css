@@ -4,8 +4,8 @@ div.custom-slider {
   cursor: pointer;
 
   /* automatically defined */
-  height: 30px; /* wrapper.height := thumb.height */
-  width: 230px; /* wrapper.width := fullWidth */
+  /*height: 30px; /* wrapper.height := thumb.height */
+  /*width: 230px; /* wrapper.width := fullWidth */
                 /* track.width := wrapper.width - track.capWidth * 2 */
 
   /* must be defined by user as -- */
@@ -14,28 +14,30 @@ div.custom-slider {
 div.custom-slider > div.track-active {
   /* must be fixed */
   position: absolute;
+  margin: 0;
   left: 0;
 
   /* automatically defined */
-  width: 115px; /* track.active.width := track.width * (value - min) / (max - min) + track.capWidth */
-  top: 10px; /* track.top := (wrapper.height - track.height) / 2 */
+  /*width: 115px; /* track.active.width := track.width * (value - min) / (max - min) + track.capWidth */
+  /*top: 10px; /* track.top := (wrapper.height - track.height) / 2 */
 
   /* must be defined by user as -- */
-  height: 10px; /* HTML attribute: data-track-height */
+  /*height: 10px; /* HTML attribute: data-track-height */
   background-color: rgba(128, 192, 255, 1); /* CSS property: background-color */
 }
 
 div.custom-slider > div.track-inactive {
   /* must be fixed */
   position: absolute;
+  margin: 0;
 
   /* automatically defined */
-  width: 115px; /* track.width * (1 - (value - min) / (max - min)) + track.capWidth */
-  top: 10px; /* track.top */
-  left: 115px; /* track.active.width */
+  /*width: 115px; /* track.width * (1 - (value - min) / (max - min)) + track.capWidth */
+  /*top: 10px; /* track.top */
+  /*left: 115px; /* track.active.width */
 
   /* must be defined by user as -- */
-  height: 10px; /* HTML attribute: data-track-height */
+  /*height: 10px; /* HTML attribute: data-track-height */
   background-color: rgba(192, 224, 255, 1); /* CSS property: background-color */
 }
 
@@ -46,13 +48,14 @@ div.custom-slider > div.tickmark {
   flex-direction: row;
   align-items: stretch;
   justify-content: space-between;
+  margin: 0;
 
   /* automatically defined */
-  width: 200px; /* wrapper.width */
-  height: 10px; /* ((tickmark.position == 'inside') ? track.height : track.top) */
-  top: 20px; /* tickmark.position == 'bottom' -> track.top + track.height */
+  /*width: 200px; /* wrapper.width */
+  /*height: 10px; /* ((tickmark.position == 'inside') ? track.height : track.top) */
+  /*top: 20px; /* tickmark.position == 'bottom' -> track.top + track.height */
              /* tickmark.position == 'inside' -> track.top */
-  left: 15px; /* track.capWidth */
+  /*left: 15px; /* track.capWidth */
 
   /* must be defined by user as -- */
 }
@@ -71,14 +74,15 @@ div.custom-slider > div.tickmark > hr {
 div.custom-slider > div.thumb {
   /* must be fixed */
   position: absolute;
+  margin: 0;
   top: 0;
 
   /* automatically defined */
-  left: 100px; /* track.active.width - thumb.width / 2 */
+  /*left: 100px; /* track.active.width - thumb.width / 2 */
 
   /* must be defined by user as -- */
-  width: 30px; /* HTML attribute: data-thumb-width */
-  height: 30px; /* HTML attribute: data-thumb-height */
+  /*width: 30px; /* HTML attribute: data-thumb-width */
+  /*height: 30px; /* HTML attribute: data-thumb-height */
   background-color: rgba(128, 192, 255, 1); /* CSS property: background-color */
   border-radius: 15px; /* CSS property: border-radius */
 }

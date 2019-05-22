@@ -278,56 +278,92 @@ function CustomSlider() {
     target.appendChild(thumbElem);
 
 
-    // 3. TODO: add event listeners
-    function dragSliderThumb() {
-      function sliderDragging(e) {
-        var thumbLeft;
-        e = (e || window.event);
-        e.preventDefault();
-        thumbLeft = e.clientX - target.offsetLeft - thumbElem.offsetWidth / 2;
-        if (thumbLeft < -tickmarkElem.offsetLeft) {
-          thumbElem.style.left = '0';
-          trackAElem.style.width = tickmarkElem.offsetLeft + 'px';
-          trackIElem.style.width =
-            (tickmarkElem.offsetLeft + tickmarkElem.offsetWidth) + 'px';
+    // 3. add event listeners
+    (function () {
+      function updateSlider(e) {
+        var
+          wrapperLeft,
+          trackCapWidth,
+          trackSettableWidth,
+          trackFullWidth,
+          thumbHalfWidth,
+          thumbLeft, thumbLeftMin, thumbLeftMax;
+        wrapperLeft = target.offsetLeft;
+        trackCapWidth = tickmarkElem.offsetLeft;
+        trackSettableWidth = tickmarkElem.offsetWidth;
+        trackFullWidth = trackSettableWidth + trackCapWidth * 2;
+        thumbHalfWidth = thumbElem.offsetWidth / 2;
+        thumbLeft = e.clientX - wrapperLeft - thumbHalfWidth;
+        thumbLeftMin = trackCapWidth - thumbHalfWidth;
+        thumbLeftMax = trackFullWidth - trackCapWidth - thumbHalfWidth;
+        if (thumbLeft < thumbLeftMin) {
+          thumbElem.style.left = thumbLeftMin + 'px';
+          trackAElem.style.width = trackCapWidth + 'px';
+          trackIElem.style.width = (trackCapWidth + trackSettableWidth) + 'px';
           trackIElem.style.left = trackAElem.style.width;
           target.dataset.value = data.min;
-        } else if (thumbLeft > tickmarkElem.offsetWidth - tickmarkElem.offsetLeft + thumbElem.offsetWidth / 2) {
-          thumbElem.style.left = tickmarkElem.offsetWidth + 'px';
-          trackAElem.style.width =
-            (tickmarkElem.offsetLeft + tickmarkElem.offsetWidth) + 'px';
-          trackIElem.style.width = tickmarkElem.offsetLeft + 'px';
+        } else if (thumbLeft > thumbLeftMax) {
+          thumbElem.style.left = thumbLeftMax + 'px';
+          trackAElem.style.width = (trackCapWidth + trackSettableWidth) + 'px';
+          trackIElem.style.width = trackCapWidth + 'px';
           trackIElem.style.left = trackAElem.style.width;
           target.dataset.value = data.max;
         } else {
           thumbElem.style.left = thumbLeft + 'px';
-          trackAElem.style.width = (e.clientX - target.offsetLeft) + 'px';
+          trackAElem.style.width = (e.clientX - wrapperLeft) + 'px';
           trackIElem.style.width =
-            (tickmarkElem.offsetLeft * 2 + tickmarkElem.offsetWidth -
-            (e.clientX - target.offsetLeft)) + 'px';
+            (trackFullWidth - (e.clientX - wrapperLeft)) + 'px';
           trackIElem.style.left = trackAElem.style.width;
           target.dataset.value =
-            thumbLeft * (data.max - data.min) / tickmarkElem.offsetWidth;
+            thumbLeft * (data.max - data.min) / trackSettableWidth;
         }
       }
-      function sliderReleased(e) {
-        sliderDragging(e);
-        document.removeEventListener('mouseup', sliderReleased);
-        document.removeEventListener('touchend', sliderReleased);
-        document.removeEventListener('mousemove', sliderDragging);
-        document.removeEventListener('touchdrag', sliderDragging);
+
+      function sliderMouseMove(e) {
+        e = (e || window.event);
+        e.preventDefault();
+        updateSlider(e);
       }
-      function sliderPressed(e) {
-        sliderDragging(e);
-        document.addEventListener('mouseup', sliderReleased);
-        document.addEventListener('touchend', sliderReleased);
-        document.addEventListener('mousemove', sliderDragging);
-        document.addEventListener('touchdrag', sliderDragging);
+      function sliderMouseUp(e) {
+        e = (e || window.event);
+        e.preventDefault();
+        document.onmouseup = null;
+        document.onmousemove = null;
+        target.ontouchstart = sliderTouchStart;
+      }
+      function sliderMouseDown(e) {
+        e = (e || window.event);
+        e.preventDefault();
+        target.ontouchstart = null;
+        sliderMouseMove(e);
+        document.onmouseup = sliderMouseUp;
+        document.onmousemove = sliderMouseMove;
       }
 
-      target.addEventListener('mousedown', sliderPressed);
-    }
-    dragSliderThumb();
+      function sliderTouchMove(e) {
+        e = (e || window.event);
+        e.preventDefault();
+        updateSlider(e.touches[0]);
+      }
+      function sliderTouchEnd(e) {
+        e = (e || window.event);
+        e.preventDefault();
+        document.ontouchend = null;
+        document.ontouchmove = null;
+        target.onmousedown = sliderMouseDown;
+      }
+      function sliderTouchStart(e) {
+        e = (e || window.event);
+        e.preventDefault();
+        target.onmousedown = null;
+        sliderTouchMove(e);
+        document.ontouchend = sliderTouchEnd;
+        document.ontouchmove = sliderTouchMove;
+      }
+
+      target.ontouchstart = sliderTouchStart;
+      target.onmousedown = sliderMouseDown;
+    }());
   }
 
   return {
