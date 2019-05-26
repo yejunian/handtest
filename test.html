@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0">
+
+    <meta property="og:url" content="https://leeye51456.github.io/handtest/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="손가락 정확도 테스트">
+    <meta property="og:image" content="">
+    <meta property="og:description" content="당신의 손가락의 정확도를 테스트해 보세요.">
+
+    <title>손가락 정확도 테스트</title>
+
+    <link rel="stylesheet" type="text/css" href="./customslider/customslider.css">
+    <link rel="stylesheet" type="text/css" href="./common.css">
+    <link rel="stylesheet" type="text/css" href="./test.html.css">
+    <script type="text/javascript" src="./customslider/customslider.js"></script>
+    <script type="text/javascript" src="./test.html.js"></script>
+  </head>
+
+  <body>
+    <section id="game-section">
+      <h1>손가락 정확도 테스트</h1>
+      <h2><span id="stage-length-span">36</span>개 중 <span id="stage-span">1</span>번째</h2>
+      <div>아래 슬라이더를<br><b class="bg"><span id="target-span">83</span>%</b>에 맞추세요.</div>
+      <div id="slider-div"
+           class="custom-slider"
+           data-min="0" data-max="100" data-value="50"
+           data-width="260px"
+           data-track-cap-width="5px"
+           data-track-height="10px"
+           data-thumb-width="15px" data-thumb-height="30px"
+           data-tick-position="bottom" data-tick-count="11"></div>
+      <div class="small">슬라이더에서 손을 떼면 다음 단계로 넘어갑니다.</div>
+    </section>
+
+    <section id="result-section" style="display: none;">
+      <h1>손가락 정밀도 테스트</h1>
+      <h2>당신의 점수는</h2>
+      <div class="big"><b class="bg"><span id="score-span">xx</span>점</b></div>
+      <div class="small">정확도 <span id="accuracy-span">xx</span>%</div>
+      <div><a href="#">링크 공유</a></div>
+      <div><a href="#">Facebook에 공유</a></div>
+      <div class="small"><a href="../test.html">재도전</a></div>
+    </section>
+
+  </body>
+
+</html>

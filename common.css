@@ -1,0 +1,55 @@
+html {
+  font-family: "Apple SD Gothic Neo", "NanumBarunGothic", "Malgun Gothic", sans-serif;
+  font-size: 24px;
+  text-align: center;
+  word-break: keep-all;
+}
+body {
+  margin: 0;
+}
+h1 {
+  font-size: 28px;
+  line-height: 1;
+  margin: 0 0 50px;
+  padding: 50px 0 50px;
+  background-color: aliceblue;
+}
+h2 {
+  font-size: 32px;
+  line-height: 1.4;
+  margin: 16px 30px;
+}
+div {
+  line-height: 1.4;
+  margin: 16px 30px;
+}
+a {
+  display: block;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: darkblue;
+  text-decoration: none;
+  line-height: 1;
+  padding: 30px;
+  border-radius: 10px;
+  background-color: rgb(192, 224, 255);
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
+}
+b.bg {
+  font-size: 1.2em;
+  padding: 5px 8px;
+  background-color: aliceblue;
+  border-radius: 10px;
+}
+.big {
+  font-size: 2.5em;
+}
+.small {
+  font-size: 0.75em;
+}
+.small > a {
+  padding: 20px;
+  color: rgb(64, 64, 64);
+  background-color: rgb(240, 240, 240);
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
+}
