@@ -315,8 +315,9 @@ function CustomSlider() {
             (trackFullWidth - (e.clientX - wrapperLeft)) + 'px';
           trackIElem.style.left = trackAElem.style.width;
           target.dataset.value =
-            thumbLeft * (data.max - data.min) / trackSettableWidth;
+            thumbLeft * (data.max - data.min) / trackSettableWidth + (thumbHalfWidth * 2 - 10) / 5;
         }
+        console.log(target.dataset.value);
       }
 
       function sliderMouseMove(e) {
