@@ -24,6 +24,8 @@ div.custom-slider > div.track-active {
   /* must be defined by user as -- */
   /*height: 10px; /* HTML attribute: data-track-height */
   background-color: rgba(128, 192, 255, 1); /* CSS property: background-color */
+
+  border-radius: 5px 0 0 5px;
 }
 
 div.custom-slider > div.track-inactive {
@@ -39,6 +41,8 @@ div.custom-slider > div.track-inactive {
   /* must be defined by user as -- */
   /*height: 10px; /* HTML attribute: data-track-height */
   background-color: rgba(192, 224, 255, 1); /* CSS property: background-color */
+
+  border-radius: 0 5px 5px 0;
 }
 
 div.custom-slider > div.tickmark {
@@ -84,5 +88,5 @@ div.custom-slider > div.thumb {
   /*width: 30px; /* HTML attribute: data-thumb-width */
   /*height: 30px; /* HTML attribute: data-thumb-height */
   background-color: rgba(128, 192, 255, 1); /* CSS property: background-color */
-  border-radius: 15px; /* CSS property: border-radius */
+  border-radius: 5px; /* CSS property: border-radius */
 }
