@@ -7,45 +7,23 @@
 */
 
 
-var crc8 = (function () {
+var encoder100 = (function () {
   'use strict';
-  var crc8enc = [
-    '00', '07', '0e', '09', '1c', '1b', '12', '15',
-    '38', '3f', '36', '31', '24', '23', '2a', '2d',
-    '70', '77', '7e', '79', '6c', '6b', '62', '65',
-    '48', '4f', '46', '41', '54', '53', '5a', '5d',
-    'e0', 'e7', 'ee', 'e9', 'fc', 'fb', 'f2', 'f5',
-    'd8', 'df', 'd6', 'd1', 'c4', 'c3', 'ca', 'cd',
-    '90', '97', '9e', '99', '8c', '8b', '82', '85',
-    'a8', 'af', 'a6', 'a1', 'b4', 'b3', 'ba', 'bd',
-    'c7', 'c0', 'c9', 'ce', 'db', 'dc', 'd5', 'd2',
-    'ff', 'f8', 'f1', 'f6', 'e3', 'e4', 'ed', 'ea',
-    'b7', 'b0', 'b9', 'be', 'ab', 'ac', 'a5', 'a2',
-    '8f', '88', '81', '86', '93', '94', '9d', '9a',
-    '27', '20', '29', '2e', '3b', '3c', '35', '32',
-    '1f', '18', '11', '16', '03', '04', '0d', '0a',
-    '57', '50', '59', '5e', '4b', '4c', '45', '42',
-    '6f', '68', '61', '66', '73', '74', '7d', '7a',
-    '89', '8e', '87', '80', '95', '92', '9b', '9c',
-    'b1', 'b6', 'bf', 'b8', 'ad', 'aa', 'a3', 'a4',
-    'f9', 'fe', 'f7', 'f0', 'e5', 'e2', 'eb', 'ec',
-    'c1', 'c6', 'cf', 'c8', 'dd', 'da', 'd3', 'd4',
-    '69', '6e', '67', '60', '75', '72', '7b', '7c',
-    '51', '56', '5f', '58', '4d', '4a', '43', '44',
-    '19', '1e', '17', '10', '05', '02', '0b', '0c',
-    '21', '26', '2f', '28', '3d', '3a', '33', '34',
-    '4e', '49', '40', '47', '52', '55', '5c', '5b',
-    '76', '71', '78', '7f', '6a', '6d', '64', '63',
-    '3e', '39', '30', '37', '22', '25', '2c', '2b',
-    '06', '01', '08', '0f', '1a', '1d', '14', '13',
-    'ae', 'a9', 'a0', 'a7', 'b2', 'b5', 'bc', 'bb',
-    '96', '91', '98', '9f', '8a', '8d', '84', '83',
-    'de', 'd9', 'd0', 'd7', 'c2', 'c5', 'cc', 'cb',
-    'e6', 'e1', 'e8', 'ef', 'fa', 'fd', 'f4', 'f3'];
+  var enc = [
+    '7d', '4e', 'c5', 'b6', '0a', 'd9', 'e6', '6c', 'cd', '4c',
+    'd7', 'fe', 'f5', 'cf', '7f', '0f', 'e8', '5b', 'a9', '9b',
+    'd1', 'f7', '7e', 'a4', '6d', 'be', 'da', 'd8', 'b7', '2e',
+    '5c', '8a', 'bd', 'e4', 'd5', 'af', '6b', '1b', 'eb', '5a',
+    'ba', '0c', '1a', 'c0', 'b1', 'a5', '1f', 'ce', 'b5', 'dc',
+    'a6', '3a', 'e1', 'f9', 'c7', '2b', 'c1', '4a', '0d', '6a',
+    '9e', '7c', 'fa', 'a3', '4b', 'de', 'e2', '7a', '2c', 'a0',
+    'c6', '2a', 'd3', '5f', 'bc', 'db', 'fd', '1c', 'b4', 'e9',
+    'ea', 'd6', 'f3', 'df', '0e', 'b3', 'cb', 'b0', 'fb', '9a',
+    'b2', '8c', 'bf', 'ef', 'ed', '3f', 'b8', '9c', 'c3', 'd4', '4f'];
   return {
     get: function (src) {
-      if (src < 256 && src >= 0) {
-        return crc8enc[Math.floor(src)];
+      if (src <= 100 && src >= 0) {
+        return enc[Math.floor(src)];
       } else {
         return undefined;
       }
@@ -65,7 +43,7 @@ var testgame = (function () {
   stages = [];
   sumOfErrors = 0;
 
-  // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+  // https://stackoverflow.com/questions/2450954/
   // Durstenfeld shuffle
   function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -158,6 +136,7 @@ var testgame = (function () {
     */
     document.getElementById('score-span').innerHTML = score;
     document.getElementById('accuracy-span').innerHTML = accuracy;
+    document.getElementById('share-text').value = 'https://leeye51456.github.io/handtest/' + encoder100.get(score);
     document.getElementById('game-section').style.display = 'none';
     document.getElementById('result-section').style.display = '';
   }
@@ -192,6 +171,7 @@ function sliderPressed() {
   document.addEventListener('touchend', sliderReleased);
   document.addEventListener('mouseup', sliderReleased);
 }
+
 
 function init() {
   'use strict';
