@@ -3,7 +3,7 @@
   regexp: true
 */
 /*global
-  document, window, CustomSlider
+  document, window, ga, CustomSlider
 */
 
 
@@ -34,14 +34,16 @@ var encoder100 = (function () {
 
 var testgame = (function () {
   'use strict';
-  var customSlider, stages, tickCounts, thumbWidths, currentStage0, sumOfErrors;
+  var
+    customSlider,
+    stages, tickCounts, thumbWidths,
+    currentStage0, sumOfErrors;
 
   customSlider = new CustomSlider();
 
   tickCounts = [0, 2, 3, 4, 5, 6, 7, 9, 11];
   thumbWidths = [10, 20, 30, 40];
   stages = [];
-  sumOfErrors = 0;
 
   // https://stackoverflow.com/questions/2450954/
   // Durstenfeld shuffle
@@ -57,7 +59,7 @@ var testgame = (function () {
     return array;
   }
 
-  function initializeStagesImpl() {
+  function initializeGameImpl() {
     var tc, tw, tcl, twl, s;
     tcl = tickCounts.length;
     twl = thumbWidths.length;
@@ -95,23 +97,24 @@ var testgame = (function () {
   }
 
   function storeStageResultImpl() {
-    var stage, stageNum1, sliderDiv, currentError;
+    var stage, sliderDiv, currentError;
     stage = stages[currentStage0];
-    stageNum1 = currentStage0 + 1;
     sliderDiv = document.getElementById('slider-div');
 
     currentError = Math.abs(stage.targetValue - (+sliderDiv.dataset.value));
     sumOfErrors += currentError;
     
-    // GA로 데이터 전송
-    /*
-    stageNum1
-    stage.initialValue
-    stage.targetValue
-    stage.thumbWidth
-    stage.tickCount
-    sliderDiv.dataset.value
-    */
+    // send data with GA
+    ga('send', {
+      hitType: 'event',
+      eventCategory: 'sliderError',
+      eventAction: '(' + stage.tickCount + ',' + stage.thumbWidth + ')',
+      eventLabel: '(' +
+        stage.initialValue + ',' +
+        stage.targetValue + ',' +
+        sliderDiv.dataset.value + ')',
+      eventValue: currentError
+    });
 
     currentStage0 += 1;
   }
@@ -128,12 +131,6 @@ var testgame = (function () {
     var accuracy, score;
     score = Math.floor(Math.max(100 - 4 * sumOfErrors / stages.length, 0));
     accuracy = Math.round((100 - sumOfErrors / stages.length) * 1000) / 1000;
-    /*
-    console.log(sumOfErrors);
-    console.log(stages.length);
-    console.log(score);
-    console.log(accuracy);
-    */
     document.getElementById('score-span').innerHTML = score;
     document.getElementById('accuracy-span').innerHTML = accuracy;
     document.getElementById('share-text').value =
@@ -144,7 +141,7 @@ var testgame = (function () {
   }
 
   return {
-    initializeStages: initializeStagesImpl,
+    initializeGame: initializeGameImpl,
     loadStage: loadStageImpl,
     storeStageResult: storeStageResultImpl,
     getStage0: getStage0Impl,
@@ -178,7 +175,7 @@ function sliderPressed() {
 function init() {
   'use strict';
   var sliderDiv;
-  testgame.initializeStages();
+  testgame.initializeGame();
   testgame.loadStage(0);
   sliderDiv = document.getElementById('slider-div');
   sliderDiv.addEventListener('touchstart', sliderPressed);
