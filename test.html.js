@@ -110,10 +110,9 @@ var testgame = (function () {
       eventCategory: 'sliderError',
       eventAction: '(' + stage.tickCount + ',' + stage.thumbWidth + ')',
       eventLabel: '(' +
-        stage.initialValue + ',' +
-        stage.targetValue + ',' +
-        sliderDiv.dataset.value + ')',
-      eventValue: currentError
+        Math.round(stage.initialValue) + ',' +
+        stage.targetValue + ')',
+      eventValue: Math.round(currentError * 10000000) // 10M times
     });
 
     currentStage0 += 1;
