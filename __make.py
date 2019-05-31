@@ -17,7 +17,8 @@ enc = [
     'ea', 'd6', 'f3', 'df', '0e', 'b3', 'cb', 'b0', 'fb', '9a',
     'b2', '8c', 'bf', 'ef', 'ed', '3f', 'b8', '9c', 'c3', 'd4', '4f']
 
-p = re.compile('\[\[score_image_src\]\]')
+htmlPatt = re.compile('\[\[score_html_src\]\]')
+imgPatt = re.compile('\[\[score_image_src\]\]')
 
 
 def main():
@@ -26,8 +27,10 @@ def main():
     f.close()
 
     for i in range(101):
-        dst = p.sub(
-            ('https://leeye51456.github.io/handtest/link/img/%s.png' % enc[i]), src)
+        dst = htmlPatt.sub(
+            ('https://leeye51456.github.io/handtest/link/%s.html' % enc[i]), src)
+        dst = imgPatt.sub(
+            ('https://leeye51456.github.io/handtest/link/img/%s.png' % enc[i]), dst)
         if not os.path.isdir('link'):
             os.makedirs('link')
         f = open(('link/%s.html' % enc[i]), 'w', encoding='utf-8')
