@@ -136,7 +136,7 @@ var testgame = (function () {
     */
     document.getElementById('score-span').innerHTML = score;
     document.getElementById('accuracy-span').innerHTML = accuracy;
-    document.getElementById('share-text').value = 'https://leeye51456.github.io/handtest/' + encoder100.get(score);
+    document.getElementById('share-text').value = 'https://leeye51456.github.io/handtest/link' + encoder100.get(score) + '.html';
     document.getElementById('game-section').style.display = 'none';
     document.getElementById('result-section').style.display = '';
   }

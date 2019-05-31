@@ -29,6 +29,9 @@ function iosCopyToClipboard(el) {
   el.readOnly = oldReadOnly;
 
   document.execCommand('copy');
+
+  el.readOnly = true;
+  el.readOnly = oldReadOnly;
 }
 
 function copyToClipboard(el) {
