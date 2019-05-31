@@ -17,18 +17,32 @@ enc = [
     'ea', 'd6', 'f3', 'df', '0e', 'b3', 'cb', 'b0', 'fb', '9a',
     'b2', '8c', 'bf', 'ef', 'ed', '3f', 'b8', '9c', 'c3', 'd4', '4f']
 
+gaCode = '''<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-140849964-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-140849964-1');
+</script>'''
+
+gaPatt = re.compile('\[\[ga_script\]\]')
 htmlPatt = re.compile('\[\[score_html_src\]\]')
 imgPatt = re.compile('\[\[score_image_src\]\]')
 
 
 def main():
+    global enc, gaCode, gaPatt, htmlPatt, imgPatt
+
     f = open('template.html', 'r', encoding='utf-8')
     src = ''.join(f.readlines())
     f.close()
 
     for i in range(101):
+        dst = gaPatt.sub(gaCode, src)
         dst = htmlPatt.sub(
-            ('https://leeye51456.github.io/handtest/link/%s.html' % enc[i]), src)
+            ('https://leeye51456.github.io/handtest/link/%s.html' % enc[i]), dst)
         dst = imgPatt.sub(
             ('https://leeye51456.github.io/handtest/link/img/%s.png' % enc[i]), dst)
         if not os.path.isdir('link'):
