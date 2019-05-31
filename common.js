@@ -30,8 +30,7 @@ function iosCopyToClipboard(el) {
 
   document.execCommand('copy');
 
-  el.readOnly = true;
-  el.readOnly = oldReadOnly;
+  el.blur();
 }
 
 function copyToClipboard(el) {
