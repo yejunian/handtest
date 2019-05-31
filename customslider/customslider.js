@@ -317,7 +317,6 @@ function CustomSlider() {
           target.dataset.value =
             thumbLeft * (data.max - data.min) / trackSettableWidth + (thumbHalfWidth * 2 - 10) / 5;
         }
-        console.log(target.dataset.value);
       }
 
       function sliderMouseMove(e) {
