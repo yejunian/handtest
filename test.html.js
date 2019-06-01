@@ -107,12 +107,11 @@ var testgame = (function () {
     // send data with GA
     ga('send', {
       hitType: 'event',
-      eventCategory: 'sliderError',
-      eventAction: '(' + stage.tickCount + ',' + stage.thumbWidth + ')',
-      eventLabel: '(' +
+      eventCategory: '(' + stage.tickCount + ',' + stage.thumbWidth + ')',
+      eventAction: '(' +
         Math.round(stage.initialValue) + ',' +
         stage.targetValue + ')',
-      eventValue: Math.round(currentError * 10000000) // 10M times
+      eventLabel: String(currentError)
     });
 
     currentStage0 += 1;
