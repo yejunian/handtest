@@ -107,29 +107,6 @@ var testgame = (function () {
     // send data with GA
     ga('send', {
       hitType: 'event',
-      eventCategory: 'testCategory',
-      eventAction: 'testAction',
-      eventValue: 1234
-    });
-    ga('send', {
-      hitType: 'event',
-      eventCategory: 'testCategory',
-      eventAction: 'testAction',
-      eventLabel: 'testLabel'
-    });
-    /*
-    ga('send', {
-      hitType: 'event',
-      eventCategory: '(' + stage.tickCount + ',' + stage.thumbWidth + ')',
-      eventAction: '(' +
-        Math.round(stage.initialValue) + ',' +
-        stage.targetValue + ')',
-      eventValue: Math.round(currentError * 10000000) // 10M times
-    });
-    */
-    /*
-    ga('send', {
-      hitType: 'event',
       eventCategory: 'sliderError',
       eventAction: '(' + stage.tickCount + ',' + stage.thumbWidth + ')',
       eventLabel: '(' +
@@ -137,7 +114,6 @@ var testgame = (function () {
         stage.targetValue + ')',
       eventValue: Math.round(currentError * 10000000) // 10M times
     });
-    */
 
     currentStage0 += 1;
   }
