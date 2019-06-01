@@ -48,7 +48,7 @@ function hideCopiedMessage() {
 }
 function shareClicked() {
   'use strict';
-  var textElem, msgElem;
+  var textElem, msgElem, aElem;
   textElem = document.getElementById('share-text');
   if (navigator.userAgent.match(/iphone|ipad|ipod/i)) {
     iosCopyToClipboard(textElem);
@@ -56,14 +56,19 @@ function shareClicked() {
     copyToClipboard(textElem);
   }
   msgElem = document.getElementById('copymsg-span');
+  aElem = document.getElementById('share-a');
   msgElem.style.transition = '';
   msgElem.style.backgroundColor = 'rgba(192, 224, 255, 1)';
   msgElem.style.opacity = '1';
+  aElem.style.transition = '';
+  aElem.style.backgroundColor = 'rgba(240, 248, 255, 1)';
   textElem.style.transition = '';
   textElem.style.backgroundColor = 'rgba(192, 224, 255, 1)';
   window.setTimeout(function () {
     msgElem.style.transition = 'background-color 1s';
     msgElem.style.backgroundColor = 'rgba(192, 224, 255, 0)';
+    aElem.style.transition = 'background-color 1s';
+    aElem.style.backgroundColor = '';
     textElem.style.transition = 'background-color 1s';
     textElem.style.backgroundColor = '';
   }, 50);
