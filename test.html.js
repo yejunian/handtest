@@ -108,10 +108,10 @@ var testgame = (function () {
     ga('send', {
       hitType: 'event',
       eventCategory: '(' + stage.tickCount + ',' + stage.thumbWidth + ')',
-      eventAction: '(' +
+      eventAction: String(currentError),
+      eventLabel: '(' +
         Math.round(stage.initialValue) + ',' +
-        stage.targetValue + ')',
-      eventLabel: String(currentError)
+        stage.targetValue + ')'
     });
 
     currentStage0 += 1;
