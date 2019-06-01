@@ -198,6 +198,7 @@ function sliderPressed() {
 function init() {
   'use strict';
   var sliderDiv;
+  ga('create', 'UA-140849964-1', 'auto');
   testgame.initializeGame();
   testgame.loadStage(0);
   sliderDiv = document.getElementById('slider-div');
