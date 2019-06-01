@@ -103,8 +103,21 @@ var testgame = (function () {
 
     currentError = Math.abs(stage.targetValue - (+sliderDiv.dataset.value));
     sumOfErrors += currentError;
-    
+
     // send data with GA
+    ga('send', {
+      hitType: 'event',
+      eventCategory: 'testCategory',
+      eventAction: 'testAction',
+      eventValue: 1234
+    });
+    ga('send', {
+      hitType: 'event',
+      eventCategory: 'testCategory',
+      eventAction: 'testAction',
+      eventLabel: 'testLabel'
+    });
+    /*
     ga('send', {
       hitType: 'event',
       eventCategory: '(' + stage.tickCount + ',' + stage.thumbWidth + ')',
@@ -113,6 +126,7 @@ var testgame = (function () {
         stage.targetValue + ')',
       eventValue: Math.round(currentError * 10000000) // 10M times
     });
+    */
     /*
     ga('send', {
       hitType: 'event',
